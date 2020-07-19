@@ -4,8 +4,11 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import net.scrafet.model.Vacante;
 
+@Service
 public class VacanteServiceImpl implements IVacantesService {
 	List<Vacante> lista = null;
 	
@@ -21,7 +24,7 @@ public class VacanteServiceImpl implements IVacantesService {
 			vacante1.setNombre("Ingenierio Civil"); //Titulo de la vacante 
 			vacante1.setDescripcion("Solicitamos Ing. Civil para Puente Peatonal");
 			vacante1.setFecha(sdf.parse("01-02-2020"));
-			vacante1.setSalario(8100.0);
+			vacante1.setSalario(14000.0);
 			vacante1.setDestacado(1);
 			vacante1.setImagen("empresa1.png");
 			
