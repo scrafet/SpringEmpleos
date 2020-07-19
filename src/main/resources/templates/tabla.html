@@ -22,6 +22,7 @@
 			<th>Salario Ofrecido</th>
 			<th>Descripcion</th>
 			<th>Destacado</th>
+			<th>Detalle</th>
 		</tr>
 		<!-- 		estructura  th:each:"variable temporal" ${variable de controlador con datos} -->
 		<tr th:each="vacante : ${vacantes}">
@@ -39,6 +40,9 @@
                 <td>
                 <span th:if="${vacante.destacado == 1}" class="badge badge-success">Si</span>
                 <span th:unless="${vacante.destacado == 1}" class="badge badge-danger">No</span>
+                </td>
+                <td>
+                <a th:href="@{/vacantes/view/{id} (id=${vacante.id})}" class="btn btn-success">Detalle</a>
                 </td>
                 
 		</tr>
