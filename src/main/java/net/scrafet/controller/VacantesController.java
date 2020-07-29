@@ -32,6 +32,7 @@ public class VacantesController {
 
 	@PostMapping("/save")
 	public String guardar(Vacante vacante) {
+		serviceVacantes.guardar(vacante);
 		System.out.println("vacante : " + vacante);
 		return "vacantes/listVacantes";
 	}
@@ -76,7 +77,7 @@ public class VacantesController {
 	@InitBinder
 	public void initBinder(WebDataBinder webDataBinder) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		webDataBinder.registerCustomEditor(Date.class, new CustomDatEditor(dateFormat, false));
+		webDataBinder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
 	}
 
 }
