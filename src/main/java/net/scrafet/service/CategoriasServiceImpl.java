@@ -46,11 +46,18 @@ public class CategoriasServiceImpl implements ICategoriasService {
 			categoria5.setNombre("Construccion");
 			categoria5.setDescripcion("Sector de diseño planeacion y ejecucion de obras civiles y empresariales");		
 			
+			//Categoria 6
+			Categoria categoria6 = new Categoria();
+			categoria6.setId(6);
+			categoria6.setNombre("Desarrollo de Software");
+			categoria6.setDescripcion("trabajo para programadores");
+			
 			lista.add(categoria1);
 			lista.add(categoria2);
 			lista.add(categoria3);
 			lista.add(categoria4);
 			lista.add(categoria5);
+			lista.add(categoria6);
 			
 			
 			

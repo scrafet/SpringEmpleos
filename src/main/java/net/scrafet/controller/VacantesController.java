@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.scrafet.model.Vacante;
+import net.scrafet.service.ICategoriasService;
 import net.scrafet.service.IVacantesService;
 
 @Controller
@@ -28,9 +29,13 @@ public class VacantesController {
 
 	@Autowired
 	private IVacantesService serviceVacantes;
+	
+	@Autowired
+	private ICategoriasService servicecategorias;
 
 	@GetMapping("/create")
-	public String crear(Vacante vacante) {
+	public String crear(Vacante vacante,Model model) {
+		model.addAttribute("categorias", servicecategorias.buscarTodas());
 		return "vacantes/formVacante";
 	}
 
