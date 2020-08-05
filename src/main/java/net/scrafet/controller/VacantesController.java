@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.scrafet.model.Vacante;
 import net.scrafet.service.ICategoriasService;
 import net.scrafet.service.IVacantesService;
+import net.scrafet.util.Utileria;
 
 @Controller
 @RequestMapping("/vacantes")
@@ -40,13 +42,24 @@ public class VacantesController {
 	}
 
 	@PostMapping("/save")
-	public String guardar(Vacante vacante, BindingResult result, RedirectAttributes attributes) {
+	public String guardar(Vacante vacante, BindingResult result, RedirectAttributes attributes,@RequestParam("archivoImagen") MultipartFile multiPart ) {
 		if (result.hasErrors()) {
 			for (ObjectError  error: result.getAllErrors()) {
 				System.out.println("Ocurrio un Error : " + error.getDefaultMessage());
 			}
 			return "vacantes/formVacante";
 		}
+		
+		if (!multiPart.isEmpty()) {
+			// String ruta = "/empleos/img-vacantes/"; // Linux/MAC
+			String ruta = "c:/empleos/img-vacantes/"; // Windows
+			String nombreImagen = Utileria.guardarArchivo(multiPart, ruta);
+			if (nombreImagen != null) { // La imagen si se subio
+				// Procesamos la variable nombreImagen
+				vacante.setImagen(nombreImagen);
+			}
+		}
+
 		serviceVacantes.guardar(vacante);
 		attributes.addFlashAttribute("msg", "Registro Guardado");
 		System.out.println("vacante : " + vacante);
