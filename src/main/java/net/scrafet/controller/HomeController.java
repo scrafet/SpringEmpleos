@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import com.sun.el.parser.ParseException;
 
@@ -54,11 +55,16 @@ public class HomeController {
 	
 	@GetMapping("/")
 	public String mostrarHome(Model model) {
-		List<Vacante> lista = serviceVacantes.buscarTodas();
-		model.addAttribute("vacantes", lista);
-		
+//		List<Vacante> lista = serviceVacantes.buscarTodas();
+//		model.addAttribute("vacantes", lista); - Ahora se carga desde el ,metodo setGenericos que nos
+//      brinda u model para toda la clases gracias a la anotacion @ModelAttribute		
 		return "home";
 		
+	}
+	
+	@ModelAttribute
+	public void setGenericos(Model model) {
+		model.addAttribute("vacantes", serviceVacantes.buscarDestacadas());
 	}
 	
 	

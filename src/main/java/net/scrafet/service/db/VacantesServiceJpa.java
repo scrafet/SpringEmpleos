@@ -39,4 +39,14 @@ public class VacantesServiceJpa implements IVacantesService {
 
 	}
 
+	@Override
+	public List<Vacante> buscarDestacadas() {
+		return vacantesRepo.findByDestacadoAndEstatusOrderByIdDesc(1, "Aprobada");
+	}
+
+	@Override
+	public void eliminar(Integer idVacante) {
+		vacantesRepo.deleteById(idVacante);		
+	}
+
 }
