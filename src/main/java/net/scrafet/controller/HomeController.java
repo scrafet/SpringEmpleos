@@ -15,11 +15,16 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.sun.el.parser.ParseException;
 
+import net.scrafet.model.Perfil;
+import net.scrafet.model.Usuario;
 import net.scrafet.model.Vacante;
 import net.scrafet.service.ICategoriasService;
+import net.scrafet.service.IUsuariosService;
 import net.scrafet.service.IVacantesService;
 
 @Controller
@@ -30,6 +35,35 @@ public class HomeController {
 	
 	@Autowired
 	private IVacantesService serviceVacantes;
+	
+	@Autowired
+	private IUsuariosService serviceUsuarios;
+	
+	@GetMapping("/signup")
+	public String registrarse(Usuario usuario) {
+		return "formRegistro";
+	}
+	
+	
+	@PostMapping("/signup")
+	public String guardarRegistro(Usuario usuario, RedirectAttributes attributes) {
+		usuario.setEstatus(1); // Activado por defecto
+		usuario.setFechaRegistro(new Date()); // Fecha de Registro, la fecha actual del servidor
+		
+		// Creamos el Perfil que le asignaremos al usuario nuevo
+		Perfil perfil = new Perfil();
+		perfil.setId(3); // Perfil USUARIO
+		usuario.agregar(perfil);
+		
+		/**
+		 * Guardamos el usuario en la base de datos. El Perfil se guarda automaticamente
+		 */
+		serviceUsuarios.guardar(usuario);
+				
+		attributes.addFlashAttribute("msg", "El registro fue guardado correctamente!");
+		
+		return "redirect:/usuarios/index";
+	}
 	
 	@GetMapping("/tabla")
 	public String mostrarTabla(Model model) {
