@@ -10,4 +10,6 @@ public interface IUsuariosService {
 	void guardar(Usuario vacante);
 //	List<Usuario> buscarDestacadas();
 	void eliminar(Integer idVacante);
+	
+	Usuario buscarPorUsername(String username);
 }
