@@ -20,6 +20,10 @@ public class DatabaseWebSecurity extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		
+		/**
+		 * Configuracion de authentification perzonalizada
+		 */
 		auth.jdbcAuthentication().dataSource(dataSource)
 		.usersByUsernameQuery("select username, password, estatus from Usuarios where username=?")
 		.authoritiesByUsernameQuery("select u.username, p.perfil from UsuarioPerfil up " +
@@ -44,6 +48,10 @@ public class DatabaseWebSecurity extends WebSecurityConfigurerAdapter {
 	"/search",
 	"/vacantes/view/**").permitAll()
 	// Asignar permisos a URLs por ROLES
+	.antMatchers("/solicitudes/create/**",
+			 "/solicitudes/save/**").hasAuthority("USUARIO")
+
+	.antMatchers("/solicitudes/**").hasAnyAuthority("SUPERVISOR","ADMINISTRADOR")
 	.antMatchers("/vacantes/**").hasAnyAuthority("SUPERVISOR","ADMINISTRADOR")
 	.antMatchers("/categorias/**").hasAnyAuthority("SUPERVISOR","ADMINISTRADOR")     
 	.antMatchers("/usuarios/**").hasAnyAuthority("ADMINISTRADOR")
@@ -53,6 +61,10 @@ public class DatabaseWebSecurity extends WebSecurityConfigurerAdapter {
 	.and().formLogin().loginPage("/login").permitAll();
 	}
 	
+	/**
+	 *  Implementación de Spring Security que encripta passwords con el algoritmo Bcrypt
+	 * @return
+	 */	
 	@Bean
 	public PasswordEncoder passwordEncoder() {   
 	return new BCryptPasswordEncoder();

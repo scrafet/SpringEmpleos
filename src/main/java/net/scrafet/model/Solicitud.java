@@ -23,10 +23,14 @@ public class Solicitud {
 	private String comentarios;
 	private String archivo; // El nombre del archivo PDF, DOCX del CV.
 
-	// EJERCICIO: Configurar relación Uno a Uno con Vacantes	
+	// EJERCICIO: Configurar relación Uno a Uno con Vacantes
+	@OneToOne
+	@JoinColumn(name = "idVacante") // foreignKey en la tabla de solicitudes
 	private Vacante vacante;
 
 	// EJERCICIO: Configurar relación Uno a Uno con Usuarios
+	@OneToOne
+	@JoinColumn(name = "idUsuario") // foreignKey en la tabla de usuarios
 	private Usuario usuario;
 
 	public Solicitud() {
